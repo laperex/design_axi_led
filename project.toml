@@ -1,0 +1,152 @@
+# =============================================================================
+# project.toml - basys3_led_ctrl
+# Target: Basys3 xc7a35tcpg236-1
+# xviv commit: 1ef1c67 (latest)
+#
+# Notable API changes from b028cf3 -> 1ef1c67:
+#   - XvivConfig(project_file=, *, board_repo=, ip_repo=)   [renamed args]
+#   - IpConfig.fpga_ref -> IpConfig.fpga
+#   - IpWrapperConfig: ip_name/ip_top -> ip/top
+#   - CoreConfig.fpga_ref -> CoreConfig.fpga
+#   - SynthConfig: all *_file output fields -> bare names (synth_stub, synth_dcp...)
+#   - out_of_context_subcores= removed from [[synth]]
+#     -> replaced by  `xviv synth --design top --parallel`  CLI flag
+#   - Loader now processes sections in fixed dependency order (not TOML order)
+#   - project.lock file generation added (xviv generate_lock)
+#   - Bug #1 (ip= shortform) fixed in add_core_cfg
+#   - Bug #2 (out_files missing) fixed - call site removed from commands.py
+# =============================================================================
+
+[project]
+work_dir = "build"
+
+# -- FPGA Target ---------------------------------------------------------------
+[[fpga]]
+name      = "basys3"
+fpga_part = "xc7a35tcpg236-1"
+
+# -----------------------------------------------------------------------------
+# Custom AXI4-Lite LED Controller IP
+#
+# Top module uses a SystemVerilog interface port (axi_lite_if.slave).
+# [[wrapper]] generates a flattened axi_led_ctrl_wrapper.sv via pyslang so
+# Vivado's IP Packager can infer AXI bus interfaces from scalar port names.
+# -----------------------------------------------------------------------------
+
+[[ip]]
+name    = "axi_led_ctrl"
+top     = "axi_led_ctrl"
+sources = [
+    "./srcs/rtl/axi_lite_if.sv",
+    "./srcs/rtl/led_ctrl_regs.sv",
+    "./srcs/rtl/axi_led_ctrl.sv",
+]
+vendor  = "laperex"
+library = "basys3_demo"
+version = "1.0"
+
+[[wrapper]]
+ip      = "axi_led_ctrl"
+sources = [
+    "./srcs/rtl/axi_lite_if.sv",
+    "./srcs/rtl/led_ctrl_regs.sv",
+    "./srcs/rtl/axi_led_ctrl.sv",
+]
+
+# -----------------------------------------------------------------------------
+# Catalog Cores
+#
+# Core 1: Xilinx Clocking Wizard  - partial VLNV resolved against live catalog
+# Core 2: Packaged custom IP      - vlnv must match [[ip]] vendor:lib:name:ver
+#
+# Bug #1 (ip= shortform) is fixed in 1ef1c67; both forms now work:
+#   ip   = "axi_led_ctrl"                  - shortform (inherits vlnv)
+#   vlnv = "laperex:basys3_demo:axi_led_ctrl:1.0"  - explicit (always safe)
+# -----------------------------------------------------------------------------
+
+[[core]]
+name = "clk_wiz_0"
+vlnv = "clk_wiz:6.0"
+
+[[core]]
+name = "axi_led_ctrl_0"
+ip   = "axi_led_ctrl"
+
+# -----------------------------------------------------------------------------
+# RTL Design
+# -----------------------------------------------------------------------------
+
+[[design]]
+name    = "top"
+top     = "top"
+sources = [
+    "srcs/rtl/axi_master.sv",
+    "srcs/rtl/top.sv",
+]
+
+# -----------------------------------------------------------------------------
+# SubCore Bindings - link each core into the design hierarchy
+# inst_hier_path must match the RTL instance name exactly
+# -----------------------------------------------------------------------------
+
+[[subcore]]
+core           = "clk_wiz_0"
+design         = "top"
+inst_hier_path = "/top/u_clk_wiz_0"
+
+[[subcore]]
+core           = "axi_led_ctrl_0"
+design         = "top"
+inst_hier_path = "/top/u_axi_led_ctrl_0"
+
+# -----------------------------------------------------------------------------
+# Synthesis
+#
+# OOC core synths (no opt/place/route - stub + DCP only)
+# Design synth produces bitstream + reports
+#
+# NOTE: out_of_context_subcores= no longer exists in [[synth]].
+# OOC parallel core synthesis is now triggered at runtime with:
+#   xviv synth --design top --parallel
+# Without --parallel, core synths must be run first manually:
+#   xviv synth --core clk_wiz_0
+#   xviv synth --core axi_led_ctrl_0
+#   xviv synth --design top
+# -----------------------------------------------------------------------------
+
+[[synth]]
+core      = "clk_wiz_0"
+run_opt   = false
+run_place = false
+run_route = false
+
+[[synth]]
+core      = "axi_led_ctrl_0"
+run_opt   = false
+run_place = false
+run_route = false
+
+[[synth]]
+design                      = "top"
+constraints                 = ["constraints/basys3.xdc"]
+bitstream                   = true
+route_report_timing_summary = true
+route_report_drc            = true
+
+# -----------------------------------------------------------------------------
+# Simulation - standalone xsim IP-level testbench
+# Does not depend on catalog IPs; sources list is self-contained.
+# -----------------------------------------------------------------------------
+
+[[simulation]]
+name    = "tb_axi_led_ctrl"
+top     = "tb_axi_led_ctrl"
+sources = [
+    "./srcs/rtl/axi_lite_if.sv",
+    "./srcs/rtl/led_ctrl_regs.sv",
+    "./srcs/rtl/axi_led_ctrl.sv",
+    "srcs/sim/tb_axi_led_ctrl.sv",
+]
+backend   = "xsim"
+timescale = "1ns/1ps"
+defines   = ["SIM=1"]

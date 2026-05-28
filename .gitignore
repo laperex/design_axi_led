@@ -1,0 +1,47 @@
+# --- xviv / project tooling ---
+/xviv
+/.venv
+/.mypy_cache
+/.cache
+/.tree
+/*cache
+
+# --- build outputs ---
+/build
+/NA
+
+# --- Vivado project run artifacts ---
+*.runs/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.gen/
+*.srcs/*/ip/
+hd_visual/
+
+# --- Vivado logs & journals ---
+*.log
+*.jou
+*.str
+vivado*.str
+vivado*.jou
+
+# --- Vivado webtalk ---
+webtalk*.jou
+webtalk*.log
+usage_statistics_webtalk.xml
+
+# --- Vivado debug / reports ---
+*.pb
+*.xsa
+*.ltx
+*.debug_nets.ltx
+clockInfo.txt
+FinalUnmatchedCellsToUnplace.txt
+.env
+.envrc
+
+debug.md
+
+.Xil

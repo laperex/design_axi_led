@@ -1,0 +1,198 @@
+[project]
+work_dir = "./build"
+log_file = "./build/log/xviv.log"
+board_repo = []
+ip_repo = ["./build/ip"]
+
+[[fpga]]
+name = "basys3"
+fpga_part = "xc7a35tcpg236-1"
+
+[[ip]]
+vendor = "laperex"
+library = "basys3_demo"
+version = "1.0"
+vlnv = "laperex:basys3_demo:axi_led_ctrl:1.0"
+repo = "/home/laperex/Programming/xviv_examples/design_axi_led/build/ip"
+name = "axi_led_ctrl"
+top = "axi_led_ctrl"
+fpga = "basys3"
+
+[[ip.sources]]
+files = ["./srcs/rtl/axi_lite_if.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[ip.sources]]
+files = ["./srcs/rtl/led_ctrl_regs.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[ip.sources]]
+files = ["./srcs/rtl/axi_led_ctrl.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[wrapper]]
+wrapper_top = "axi_led_ctrl_wrapper"
+ip = "axi_led_ctrl"
+top = "axi_led_ctrl"
+wrapper_file = "./build/wrapper/axi_led_ctrl_wrapper.sv"
+
+[[wrapper.sources]]
+files = ["./srcs/rtl/axi_lite_if.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[wrapper.sources]]
+files = ["./srcs/rtl/led_ctrl_regs.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[wrapper.sources]]
+files = ["./srcs/rtl/axi_led_ctrl.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[core]]
+name = "clk_wiz_0"
+vlnv = "clk_wiz:6.0"
+fpga = "basys3"
+xci_file = "./build/core/clk_wiz_0/clk_wiz_0.xci"
+
+[[core]]
+name = "axi_led_ctrl_0"
+vlnv = "laperex:basys3_demo:axi_led_ctrl:1.0"
+fpga = "basys3"
+xci_file = "./build/core/axi_led_ctrl_0/axi_led_ctrl_0.xci"
+
+[[synth]]
+core = "clk_wiz_0"
+top = "clk_wiz_0"
+fpga = "basys3"
+synth_incremental = true
+run_synth = true
+run_opt = false
+impl_incremental = true
+run_place = false
+run_phys_opt = true
+run_route = false
+synth_directive = "default"
+synth_mode = "out_of_context"
+synth_flatten_hierarchy = "rebuilt"
+synth_fsm_extraction = "auto"
+opt_directive = "default"
+place_directive = "default"
+phys_opt_directive = "default"
+route_directive = "default"
+constraints = []
+synth_dcp = "./build/synth/clk_wiz_0/checkpoints/synth.dcp"
+place_dcp = "./build/synth/clk_wiz_0/checkpoints/place.dcp"
+route_dcp = "./build/synth/clk_wiz_0/checkpoints/route.dcp"
+synth_stub = "./build/synth/clk_wiz_0/clk_wiz_0_stub.v"
+
+[[synth]]
+core = "axi_led_ctrl_0"
+top = "axi_led_ctrl_0"
+fpga = "basys3"
+synth_incremental = true
+run_synth = true
+run_opt = false
+impl_incremental = true
+run_place = false
+run_phys_opt = true
+run_route = false
+synth_directive = "default"
+synth_mode = "out_of_context"
+synth_flatten_hierarchy = "rebuilt"
+synth_fsm_extraction = "auto"
+opt_directive = "default"
+place_directive = "default"
+phys_opt_directive = "default"
+route_directive = "default"
+constraints = []
+synth_dcp = "./build/synth/axi_led_ctrl_0/checkpoints/synth.dcp"
+place_dcp = "./build/synth/axi_led_ctrl_0/checkpoints/place.dcp"
+route_dcp = "./build/synth/axi_led_ctrl_0/checkpoints/route.dcp"
+synth_stub = "./build/synth/axi_led_ctrl_0/axi_led_ctrl_0_stub.v"
+
+[[synth]]
+design = "top"
+top = "top"
+fpga = "basys3"
+synth_incremental = true
+run_synth = true
+run_opt = true
+impl_incremental = true
+run_place = true
+run_phys_opt = true
+run_route = true
+synth_directive = "default"
+synth_mode = "default"
+synth_flatten_hierarchy = "rebuilt"
+synth_fsm_extraction = "auto"
+opt_directive = "default"
+place_directive = "default"
+phys_opt_directive = "default"
+route_directive = "default"
+synth_dcp = "./build/synth/top/checkpoints/synth.dcp"
+place_dcp = "./build/synth/top/checkpoints/place.dcp"
+route_dcp = "./build/synth/top/checkpoints/route.dcp"
+bitstream = "./build/synth/top/top.bit"
+route_report_drc = "./build/synth/top/reports/route_report_drc_file.rpt"
+route_report_timing_summary = "./build/synth/top/reports/route_report_timing_summary_file.rpt"
+
+[[synth.constraints]]
+files = ["./constraints/basys3.xdc"]
+used_in = ["impl", "synth"]
+
+[[design]]
+name = "top"
+top = "top"
+fpga = "basys3"
+
+[[design.sources]]
+files = ["./srcs/rtl/axi_master.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[design.sources]]
+files = ["./srcs/rtl/top.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[subcore]]
+design = "top"
+inst_hier_path = "/top/u_clk_wiz_0"
+core = "clk_wiz_0"
+
+[[subcore]]
+design = "top"
+inst_hier_path = "/top/u_axi_led_ctrl_0"
+core = "axi_led_ctrl_0"
+
+[[simulation]]
+name = "tb_axi_led_ctrl"
+top = "tb_axi_led_ctrl"
+backend = "xsim"
+timescale = "1ns/1ps"
+uvm_version = "1.2"
+uvm_verbosity = "UVM_MEDIUM"
+plusargs = []
+defines = ["SIM=1"]
+threads = 1
+trace = false
+trace_fst = false
+verilator_args = []
+sdfmax = []
+sdfmin = []
+include_dirs = []
+work_dir = "./build/sim/tb_axi_led_ctrl"
+
+[[simulation.sources]]
+files = ["./srcs/rtl/axi_lite_if.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[simulation.sources]]
+files = ["./srcs/rtl/led_ctrl_regs.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[simulation.sources]]
+files = ["./srcs/rtl/axi_led_ctrl.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[simulation.sources]]
+files = ["./srcs/sim/tb_axi_led_ctrl.sv"]
+used_in = ["impl", "ooc", "sim", "synth"]
