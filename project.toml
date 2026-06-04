@@ -1,24 +1,10 @@
 # =============================================================================
 # project.toml - basys3_led_ctrl
 # Target: Basys3 xc7a35tcpg236-1
-# xviv commit: 1ef1c67 (latest)
-#
-# Notable API changes from b028cf3 -> 1ef1c67:
-#   - XvivConfig(project_file=, *, board_repo=, ip_repo=)   [renamed args]
-#   - IpConfig.fpga_ref -> IpConfig.fpga
-#   - IpWrapperConfig: ip_name/ip_top -> ip/top
-#   - CoreConfig.fpga_ref -> CoreConfig.fpga
-#   - SynthConfig: all *_file output fields -> bare names (synth_stub, synth_dcp...)
-#   - out_of_context_subcores= removed from [[synth]]
-#     -> replaced by  `xviv synth --design top --parallel`  CLI flag
-#   - Loader now processes sections in fixed dependency order (not TOML order)
-#   - project.lock file generation added (xviv generate_lock)
-#   - Bug #1 (ip= shortform) fixed in add_core_cfg
-#   - Bug #2 (out_files missing) fixed - call site removed from commands.py
 # =============================================================================
 
 [project]
-work_dir = "build"
+work_dir = "./build"
 
 # -- FPGA Target ---------------------------------------------------------------
 [[fpga]]
@@ -80,10 +66,6 @@ sources = [
 #
 # Core 1: Xilinx Clocking Wizard  - partial VLNV resolved against live catalog
 # Core 2: Packaged custom IP      - vlnv must match [[ip]] vendor:lib:name:ver
-#
-# Bug #1 (ip= shortform) is fixed in 1ef1c67; both forms now work:
-#   ip   = "axi_led_ctrl"                  - shortform (inherits vlnv)
-#   vlnv = "laperex:basys3_demo:axi_led_ctrl:1.0"  - explicit (always safe)
 # -----------------------------------------------------------------------------
 
 [[core]]
