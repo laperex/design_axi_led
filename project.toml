@@ -53,6 +53,28 @@ sources = [
     "./srcs/rtl/axi_led_ctrl.sv",
 ]
 
+
+[[ip]]
+name    = "axi_led_ctrl_0"
+top     = "axi_led_ctrl"
+sources = [
+    "./srcs/rtl/axi_lite_if.sv",
+    "./srcs/rtl/led_ctrl_regs.sv",
+    "./srcs/rtl/axi_led_ctrl.sv",
+]
+vendor  = "laperex"
+library = "basys3_demo"
+version = "1.0"
+
+[[wrapper]]
+ip      = "axi_led_ctrl_0"
+sources = [
+    "./srcs/rtl/axi_lite_if.sv",
+    "./srcs/rtl/led_ctrl_regs.sv",
+    "./srcs/rtl/axi_led_ctrl.sv",
+]
+
+
 # -----------------------------------------------------------------------------
 # Catalog Cores
 #
@@ -70,7 +92,7 @@ vlnv = "clk_wiz:6.0"
 
 [[core]]
 name = "axi_led_ctrl_0"
-ip   = "axi_led_ctrl"
+vlnv = "axi_led_ctrl:1.0"
 
 # -----------------------------------------------------------------------------
 # RTL Design
@@ -92,26 +114,15 @@ sources = [
 [[subcore]]
 core           = "clk_wiz_0"
 design         = "top"
-inst_hier_path = "/top/u_clk_wiz_0"
+inst_hier_path = "u_clk_wiz_0"
 
 [[subcore]]
 core           = "axi_led_ctrl_0"
 design         = "top"
-inst_hier_path = "/top/u_axi_led_ctrl_0"
+inst_hier_path = "u_axi_led_ctrl_0"
 
 # -----------------------------------------------------------------------------
 # Synthesis
-#
-# OOC core synths (no opt/place/route - stub + DCP only)
-# Design synth produces bitstream + reports
-#
-# NOTE: out_of_context_subcores= no longer exists in [[synth]].
-# OOC parallel core synthesis is now triggered at runtime with:
-#   xviv synth --design top --parallel
-# Without --parallel, core synths must be run first manually:
-#   xviv synth --core clk_wiz_0
-#   xviv synth --core axi_led_ctrl_0
-#   xviv synth --design top
 # -----------------------------------------------------------------------------
 
 [[synth]]
@@ -135,7 +146,6 @@ route_report_drc            = true
 
 # -----------------------------------------------------------------------------
 # Simulation - standalone xsim IP-level testbench
-# Does not depend on catalog IPs; sources list is self-contained.
 # -----------------------------------------------------------------------------
 
 [[simulation]]
@@ -145,8 +155,8 @@ sources = [
     "./srcs/rtl/axi_lite_if.sv",
     "./srcs/rtl/led_ctrl_regs.sv",
     "./srcs/rtl/axi_led_ctrl.sv",
-    "srcs/sim/tb_axi_led_ctrl.sv",
+    "./srcs/sim/tb_axi_led_ctrl.sv",
 ]
 backend   = "xsim"
 timescale = "1ns/1ps"
-defines   = ["SIM=1"]
+# defines   = ["SIM=1"]

@@ -19,15 +19,43 @@ top = "axi_led_ctrl"
 fpga = "basys3"
 
 [[ip.sources]]
-files = ["./srcs/rtl/axi_lite_if.sv"]
+file = "./srcs/rtl/axi_lite_if.sv"
+hash = "94eee9b4d576255261a775cf129dc5625ac6c9156cd9d42c8a184a0071d2b177720c3ea69fa7a304cee62daf9471ca201a9542c8e2f1312cc3d3fbb688cb7289"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[ip.sources]]
-files = ["./srcs/rtl/led_ctrl_regs.sv"]
+file = "./srcs/rtl/led_ctrl_regs.sv"
+hash = "c3172947d4968ec1a8eb7e0efd5a97838801e436b3ae852e807695315beedfcfeb475e0c9ccc9a78c377032e3d6ac147b87279d3d5c485ad81cdb71fd0bb7adb"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[ip.sources]]
-files = ["./srcs/rtl/axi_led_ctrl.sv"]
+file = "./srcs/rtl/axi_led_ctrl.sv"
+hash = "900d440c7995c9ce35e541e92a685e95a3fe73d8615d0b5d4da74e1022e5c073001db4af2e4e972c437f282816bef28f649a08ae97d0e1fbcc0b0d2c51dbeb3d"
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[ip]]
+vendor = "laperex"
+library = "basys3_demo"
+version = "1.0"
+vlnv = "laperex:basys3_demo:axi_led_ctrl_0:1.0"
+repo = "/home/laperex/Programming/xviv_examples/design_axi_led/build/ip"
+name = "axi_led_ctrl_0"
+top = "axi_led_ctrl"
+fpga = "basys3"
+
+[[ip.sources]]
+file = "./srcs/rtl/axi_lite_if.sv"
+hash = "94eee9b4d576255261a775cf129dc5625ac6c9156cd9d42c8a184a0071d2b177720c3ea69fa7a304cee62daf9471ca201a9542c8e2f1312cc3d3fbb688cb7289"
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[ip.sources]]
+file = "./srcs/rtl/led_ctrl_regs.sv"
+hash = "c3172947d4968ec1a8eb7e0efd5a97838801e436b3ae852e807695315beedfcfeb475e0c9ccc9a78c377032e3d6ac147b87279d3d5c485ad81cdb71fd0bb7adb"
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[ip.sources]]
+file = "./srcs/rtl/axi_led_ctrl.sv"
+hash = "900d440c7995c9ce35e541e92a685e95a3fe73d8615d0b5d4da74e1022e5c073001db4af2e4e972c437f282816bef28f649a08ae97d0e1fbcc0b0d2c51dbeb3d"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[wrapper]]
@@ -37,15 +65,39 @@ top = "axi_led_ctrl"
 wrapper_file = "./build/wrapper/axi_led_ctrl_wrapper.sv"
 
 [[wrapper.sources]]
-files = ["./srcs/rtl/axi_lite_if.sv"]
+file = "./srcs/rtl/axi_lite_if.sv"
+hash = "94eee9b4d576255261a775cf129dc5625ac6c9156cd9d42c8a184a0071d2b177720c3ea69fa7a304cee62daf9471ca201a9542c8e2f1312cc3d3fbb688cb7289"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[wrapper.sources]]
-files = ["./srcs/rtl/led_ctrl_regs.sv"]
+file = "./srcs/rtl/led_ctrl_regs.sv"
+hash = "c3172947d4968ec1a8eb7e0efd5a97838801e436b3ae852e807695315beedfcfeb475e0c9ccc9a78c377032e3d6ac147b87279d3d5c485ad81cdb71fd0bb7adb"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[wrapper.sources]]
-files = ["./srcs/rtl/axi_led_ctrl.sv"]
+file = "./srcs/rtl/axi_led_ctrl.sv"
+hash = "900d440c7995c9ce35e541e92a685e95a3fe73d8615d0b5d4da74e1022e5c073001db4af2e4e972c437f282816bef28f649a08ae97d0e1fbcc0b0d2c51dbeb3d"
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[wrapper]]
+wrapper_top = "axi_led_ctrl_wrapper"
+ip = "axi_led_ctrl_0"
+top = "axi_led_ctrl"
+wrapper_file = "./build/wrapper/axi_led_ctrl_wrapper.sv"
+
+[[wrapper.sources]]
+file = "./srcs/rtl/axi_lite_if.sv"
+hash = "94eee9b4d576255261a775cf129dc5625ac6c9156cd9d42c8a184a0071d2b177720c3ea69fa7a304cee62daf9471ca201a9542c8e2f1312cc3d3fbb688cb7289"
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[wrapper.sources]]
+file = "./srcs/rtl/led_ctrl_regs.sv"
+hash = "c3172947d4968ec1a8eb7e0efd5a97838801e436b3ae852e807695315beedfcfeb475e0c9ccc9a78c377032e3d6ac147b87279d3d5c485ad81cdb71fd0bb7adb"
+used_in = ["impl", "ooc", "sim", "synth"]
+
+[[wrapper.sources]]
+file = "./srcs/rtl/axi_led_ctrl.sv"
+hash = "900d440c7995c9ce35e541e92a685e95a3fe73d8615d0b5d4da74e1022e5c073001db4af2e4e972c437f282816bef28f649a08ae97d0e1fbcc0b0d2c51dbeb3d"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[core]]
@@ -56,9 +108,19 @@ xci_file = "./build/core/clk_wiz_0/clk_wiz_0.xci"
 
 [[core]]
 name = "axi_led_ctrl_0"
-vlnv = "laperex:basys3_demo:axi_led_ctrl:1.0"
+vlnv = "axi_led_ctrl:1.0"
 fpga = "basys3"
 xci_file = "./build/core/axi_led_ctrl_0/axi_led_ctrl_0.xci"
+
+[[subcore]]
+design = "top"
+core = "clk_wiz_0"
+inst_hier_path = "u_clk_wiz_0"
+
+[[subcore]]
+design = "top"
+core = "axi_led_ctrl_0"
+inst_hier_path = "u_axi_led_ctrl_0"
 
 [[synth]]
 core = "clk_wiz_0"
@@ -80,6 +142,8 @@ place_directive = "default"
 phys_opt_directive = "default"
 route_directive = "default"
 constraints = []
+lock_file = "./build/synth/clk_wiz_0/synth.toml"
+usr_access_value = "0x15422623"
 synth_dcp = "./build/synth/clk_wiz_0/checkpoints/synth.dcp"
 place_dcp = "./build/synth/clk_wiz_0/checkpoints/place.dcp"
 route_dcp = "./build/synth/clk_wiz_0/checkpoints/route.dcp"
@@ -105,6 +169,8 @@ place_directive = "default"
 phys_opt_directive = "default"
 route_directive = "default"
 constraints = []
+lock_file = "./build/synth/axi_led_ctrl_0/synth.toml"
+usr_access_value = "0x15422623"
 synth_dcp = "./build/synth/axi_led_ctrl_0/checkpoints/synth.dcp"
 place_dcp = "./build/synth/axi_led_ctrl_0/checkpoints/place.dcp"
 route_dcp = "./build/synth/axi_led_ctrl_0/checkpoints/route.dcp"
@@ -129,6 +195,8 @@ opt_directive = "default"
 place_directive = "default"
 phys_opt_directive = "default"
 route_directive = "default"
+lock_file = "./build/synth/top/synth.toml"
+usr_access_value = "0x15422623"
 synth_dcp = "./build/synth/top/checkpoints/synth.dcp"
 place_dcp = "./build/synth/top/checkpoints/place.dcp"
 route_dcp = "./build/synth/top/checkpoints/route.dcp"
@@ -137,7 +205,8 @@ route_report_drc = "./build/synth/top/reports/route_report_drc_file.rpt"
 route_report_timing_summary = "./build/synth/top/reports/route_report_timing_summary_file.rpt"
 
 [[synth.constraints]]
-files = ["./constraints/basys3.xdc"]
+file = "./constraints/basys3.xdc"
+hash = "9e8db99b6cf21828b3bc1e20a524ad9159325cd80e2e11981804fef369027e630c7f05a0ebb989527cdcf37489954c7e5bcee2d683257ca85c9918c69efc6ff7"
 used_in = ["impl", "synth"]
 
 [[design]]
@@ -146,22 +215,14 @@ top = "top"
 fpga = "basys3"
 
 [[design.sources]]
-files = ["./srcs/rtl/axi_master.sv"]
+file = "./srcs/rtl/axi_master.sv"
+hash = "97ea5857b2d3ed35ff509fb3f781d47320a23acfadefdf0f8553eef0fc7088fe6cc57e606b31298f9d49cc6bd4701cf64788b367039e679f3f0254ef104aefe5"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[design.sources]]
-files = ["./srcs/rtl/top.sv"]
+file = "./srcs/rtl/top.sv"
+hash = "2ed43d40dadcce9a855827ee4edc2f6792932fdfe3648d94ce7f46e97c4db44a91ffcf36f5b18ec2ab4adef37413add9ae3ac545b0bf6deeb09315d041ac88c3"
 used_in = ["impl", "ooc", "sim", "synth"]
-
-[[subcore]]
-design = "top"
-inst_hier_path = "/top/u_clk_wiz_0"
-core = "clk_wiz_0"
-
-[[subcore]]
-design = "top"
-inst_hier_path = "/top/u_axi_led_ctrl_0"
-core = "axi_led_ctrl_0"
 
 [[simulation]]
 name = "tb_axi_led_ctrl"
@@ -171,7 +232,7 @@ timescale = "1ns/1ps"
 uvm_version = "1.2"
 uvm_verbosity = "UVM_MEDIUM"
 plusargs = []
-defines = ["SIM=1"]
+defines = []
 threads = 1
 trace = false
 trace_fst = false
@@ -182,17 +243,21 @@ include_dirs = []
 work_dir = "./build/sim/tb_axi_led_ctrl"
 
 [[simulation.sources]]
-files = ["./srcs/rtl/axi_lite_if.sv"]
+file = "./srcs/rtl/axi_lite_if.sv"
+hash = "94eee9b4d576255261a775cf129dc5625ac6c9156cd9d42c8a184a0071d2b177720c3ea69fa7a304cee62daf9471ca201a9542c8e2f1312cc3d3fbb688cb7289"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[simulation.sources]]
-files = ["./srcs/rtl/led_ctrl_regs.sv"]
+file = "./srcs/rtl/led_ctrl_regs.sv"
+hash = "c3172947d4968ec1a8eb7e0efd5a97838801e436b3ae852e807695315beedfcfeb475e0c9ccc9a78c377032e3d6ac147b87279d3d5c485ad81cdb71fd0bb7adb"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[simulation.sources]]
-files = ["./srcs/rtl/axi_led_ctrl.sv"]
+file = "./srcs/rtl/axi_led_ctrl.sv"
+hash = "900d440c7995c9ce35e541e92a685e95a3fe73d8615d0b5d4da74e1022e5c073001db4af2e4e972c437f282816bef28f649a08ae97d0e1fbcc0b0d2c51dbeb3d"
 used_in = ["impl", "ooc", "sim", "synth"]
 
 [[simulation.sources]]
-files = ["./srcs/sim/tb_axi_led_ctrl.sv"]
+file = "./srcs/sim/tb_axi_led_ctrl.sv"
+hash = "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e"
 used_in = ["impl", "ooc", "sim", "synth"]
