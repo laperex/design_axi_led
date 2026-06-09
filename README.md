@@ -321,12 +321,3 @@ XVIV_VIVADO_SOURCE_SCRIPT=/tools/Xilinx/Vivado/2024.1/settings64.sh
 ```
 
 ---
-
-## Regenerate demo GIFs
-
-Requires [VHS](https://github.com/charmbracelet/vhs).
-
-```sh
-make        # renders all demo/*.gif
-make clean  # removes generated GIFs
-```
